@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f7fafc;
+            margin: 0;
+        }
+        .btn-primary {
+            background-color: #4a90e2;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #357abd;
+        }
+        .btn-secondary {
+            background-color: #e2e8f0;
+            color: #2d3748;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #cbd5e0;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen p-6">
+    <header class="mb-8">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <!-- Logo and Application Name -->
+            <div class="flex flex-col items-center md:items-start md:w-1/2 text-center md:text-left mb-8 md:mb-0">
+                <img src="https://cdn-icons-png.flaticon.com/128/16440/16440730.png" alt="QR Logo" class="h-16 w-16 mb-4">
+                <h1 class="text-3xl font-extrabold text-gray-900 mb-2">QR Code Generator</h1>
+                <p class="text-lg text-gray-700">
+                    Create and download QR codes for URLs and text quickly and easily. <br><mark>A simple tool designed to meet your QR code needs efficiently.
+                    </mark></p>
+            </div>
+
+            <!-- Form Section -->
+            <div class="w-full md:w-1/2">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <form action="/" method="POST" class="space-y-6">
+                        <div>
+                            <label for="qr-content" class="block text-sm font-medium text-gray-700">Enter URL or Text:</label>
+                            <input type="text" id="qr-content" name="link" placeholder="https://example.com" required 
+                                   class="w-full border border-gray-300 rounded-lg py-3 px-4 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition">
+                        </div>
+                        <button type="submit" class="btn-primary w-full">Generate QR Code</button>
+                    </form>
+                    
+                    {% if qr_img_data %}
+                        <div class="mt-6 text-center">
+                            <h2 class="text-lg font-medium text-gray-800">Your QR Code:</h2>
+                            <img src="{{ qr_img_data }}" alt="QR Code" class="mt-4 mx-auto max-w-full h-auto rounded-lg shadow-md">
+                            <form action="/" method="POST" class="mt-4">
+                                <input type="hidden" name="link" value="{{ request.form.get('link') }}">
+                                <button type="submit" name="download" class="btn-secondary w-full">Download QR Code</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+</body>
+</html>
+
+
